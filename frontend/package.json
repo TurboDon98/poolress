@@ -22,7 +22,7 @@
       "electron/**/*"
     ],
     "directories": {
-      "output": "release"
+      "output": "release_new"
     },
     "win": {
       "target": "nsis",

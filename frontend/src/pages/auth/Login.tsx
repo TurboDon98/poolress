@@ -35,6 +35,8 @@ export default function Login() {
       navigate("/") 
     } catch (error) {
       console.error(error)
+      // TODO: Show error toast or alert
+      alert("Ошибка входа: Неверный email или пароль, или сервер недоступен.")
     } finally {
       setLoading(false)
     }

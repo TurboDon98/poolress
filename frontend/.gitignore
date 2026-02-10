@@ -26,6 +26,7 @@ dist-ssr
 # Release builds
 release/
 frontend/release/
+frontend/release_new/
 
 # Secrets
 gh.txt

@@ -55,6 +55,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
     } catch (e) {
       console.error(e)
+      throw e
     } finally {
       set({ isLoading: false })
     }
