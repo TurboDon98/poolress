@@ -25,6 +25,7 @@ export default function Register() {
   const navigate = useNavigate()
   const registerUser = useAuthStore((state) => state.register)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   
   const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
@@ -32,12 +33,13 @@ export default function Register() {
 
   const onSubmit = async (data: RegisterForm) => {
     setLoading(true)
+    setError(null)
     try {
       await registerUser(data)
       navigate("/")
-    } catch (error) {
-      console.error(error)
-      alert("Ошибка регистрации: " + (error instanceof Error ? error.message : "Неизвестная ошибка"))
+    } catch (err) {
+      console.error(err)
+      setError(err instanceof Error ? err.message : "Ошибка регистрации: Неизвестная ошибка")
     } finally {
       setLoading(false)
     }
@@ -54,6 +56,11 @@ export default function Register() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {error && (
+              <div className="p-3 text-sm text-red-500 bg-red-50 border border-red-200 rounded-md">
+                {error}
+              </div>
+            )}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="lastName">Фамилия</Label>

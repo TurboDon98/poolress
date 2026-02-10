@@ -21,6 +21,7 @@ export default function Login() {
   const navigate = useNavigate()
   const login = useAuthStore((state) => state.login)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -28,15 +29,15 @@ export default function Login() {
 
   const onSubmit = async (data: LoginForm) => {
     setLoading(true)
+    setError(null)
     try {
       await login(data.email, data.password)
       // If login successful (and token received), navigate to dashboard directly for now
       // Or keep OTP flow if you plan to add OTP to backend
       navigate("/") 
-    } catch (error) {
-      console.error(error)
-      // TODO: Show error toast or alert
-      alert("Ошибка входа: Неверный email или пароль, или сервер недоступен.")
+    } catch (err) {
+      console.error(err)
+      setError(err instanceof Error ? err.message : "Ошибка входа: Неверный email или пароль, или сервер недоступен.")
     } finally {
       setLoading(false)
     }
@@ -53,6 +54,11 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {error && (
+              <div className="p-3 text-sm text-red-500 bg-red-50 border border-red-200 rounded-md">
+                {error}
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input 

@@ -184,7 +184,10 @@ def auth_register(payload: dict = Body(...), req: Request = None, db: Session = 
     if not password or len(password) < 6:
         raise HTTPException(status_code=400, detail="Слишком короткий пароль")
         
-    exists = db.query(User).filter((User.email == email) | ((username is not None) & (User.username == username))).first()
+    cond = (User.email == email)
+    if username is not None:
+        cond = cond | (User.username == username)
+    exists = db.query(User).filter(cond).first()
     if exists:
         raise HTTPException(status_code=409, detail="Пользователь уже существует")
         

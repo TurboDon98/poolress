@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useTheme } from "@/components/theme-provider"
 import { useSettingsStore } from "@/store/useSettingsStore"
-import { Moon, Sun, Laptop, Server } from "lucide-react"
+import { Moon, Sun, Laptop } from "lucide-react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 export default function Settings() {
