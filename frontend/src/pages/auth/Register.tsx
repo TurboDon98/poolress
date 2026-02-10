@@ -37,6 +37,7 @@ export default function Register() {
       navigate("/")
     } catch (error) {
       console.error(error)
+      alert("Ошибка регистрации: " + (error instanceof Error ? error.message : "Неизвестная ошибка"))
     } finally {
       setLoading(false)
     }

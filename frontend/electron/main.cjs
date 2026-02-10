@@ -80,6 +80,12 @@ autoUpdater.on('update-available', (info) => {
     cancelId: 1
   }).then(result => {
     if (result.response === 0) {
+      dialog.showMessageBox(mainWindow, {
+        type: 'info',
+        title: 'Загрузка',
+        message: 'Обновление загружается в фоне. Мы сообщим, когда оно будет готово к установке.',
+        buttons: ['OK']
+      });
       autoUpdater.downloadUpdate();
     }
   });
@@ -98,4 +104,5 @@ autoUpdater.on('update-downloaded', () => {
 
 autoUpdater.on('error', (err) => {
   console.error('Update error:', err);
+  dialog.showErrorBox('Ошибка обновления', 'Не удалось загрузить обновление: ' + (err.message || err.toString()));
 });
